@@ -96,3 +96,11 @@ exports.update = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ success: true, updatedUser });
 };
+
+exports.deleteUser = async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) throw new ErrorHandler('User not found', StatusCodes.BAD_REQUEST);
+  console.log(typeof req.user.id);
+  console.log(typeof user.id);
+};

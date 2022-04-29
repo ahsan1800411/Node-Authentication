@@ -18,7 +18,7 @@ exports.errorMiddleware = (err, req, res, next) => {
     success: false,
     statusCode: defaultError.statusCode,
     message: defaultError.message,
-    // stack: process.env.NODE_ENV === 'development' ? err.stack : '',
+    stack: process.env.NODE_ENV === 'development' ? err.stack : '',
     // error: err,
   });
 };
