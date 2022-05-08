@@ -11,10 +11,10 @@ const Home = () => {
           fontSize: '2rem',
         }}
       >
-        <Link to='login' style={{ paddingRight: '10px' }}>
+        <Link to='/login' style={{ paddingRight: '10px' }}>
           Login
         </Link>
-        <Link to='register'>Register</Link>
+        <Link to='/register'>Register</Link>
       </nav>
     </>
   );

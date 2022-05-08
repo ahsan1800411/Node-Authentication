@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { loading, registerUser } = useAppContext();
+  const { loading, registerUser, showAlert, alertText, alertShown, user } =
+    useAppContext();
 
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!name || !email || !password) {
+      alertShown();
+      return;
+    }
     const data = { name, email, password };
     registerUser(data);
+    setTimeout(() => {
+      if (user) {
+        navigate('/');
+      }
+    }, 4000);
   };
 
   if (loading) {
@@ -20,8 +32,10 @@ const Register = () => {
   return (
     <>
       <h1>Register</h1>
-
-      <form>
+      {showAlert && (
+        <h1 style={{ color: 'red', marginBottom: '5px' }}>{alertText}</h1>
+      )}
+      <form onSubmit={handleSubmit}>
         <label htmlFor='name'>Name</label>
         <input
           type='text'
@@ -46,9 +60,7 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type='submit' onClick={handleSubmit}>
-          Register
-        </button>
+        <button type='submit'>Register</button>
       </form>
     </>
   );
