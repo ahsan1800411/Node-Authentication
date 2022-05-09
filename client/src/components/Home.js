@@ -1,7 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppContext } from '../context/AppContext';
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { user } = useAppContext();
+  const logoutUser = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    navigate('/register');
+  };
   return (
     <>
       <nav
@@ -14,7 +22,9 @@ const Home = () => {
         <Link to='/login' style={{ paddingRight: '10px' }}>
           Login
         </Link>
-        <Link to='/register'>Register</Link>
+        <Link to='/register' onClick={logoutUser}>
+          {user ? 'Logout' : 'Register'}
+        </Link>
       </nav>
     </>
   );

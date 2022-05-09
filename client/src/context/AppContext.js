@@ -11,9 +11,12 @@ import {
 
 export const AppContext = createContext();
 
+const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user'));
+
 const initialState = {
-  user: null,
-  token: null,
+  user: user ? user : null,
+  token: token ? token : null,
   alertText: '',
   loading: false,
   showAlert: false,
@@ -35,8 +38,11 @@ export const AppProvider = ({ children }) => {
     dispatch({ type: USER_LOGIN_BEGIN });
     try {
       const { data } = await axios.post('/api/auth/register', userData);
+
       const { user, token } = data;
       dispatch({ type: USER_LOGIN_SUCCESS, payload: { user, token } });
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
     } catch (error) {
       dispatch({
         type: USER_LOGIN_ERROR,

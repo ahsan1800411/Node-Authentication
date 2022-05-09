@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,12 +19,15 @@ const Register = () => {
     }
     const data = { name, email, password };
     registerUser(data);
+  };
+
+  useEffect(() => {
     setTimeout(() => {
       if (user) {
         navigate('/');
       }
-    }, 4000);
-  };
+    }, 3000);
+  }, [user, navigate]);
 
   if (loading) {
     return <h1>Loading</h1>;
